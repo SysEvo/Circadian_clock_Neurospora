@@ -10,15 +10,17 @@ x = ones(1,15)*10;       % Current (initial) state (size # of species)
 tMAX = 200;         % Maximum simulation time
 
 i = 0;
+
 while(t<tMAX)
     i = i + 1;
     X(i,:) = x;
     T(i)   = t;
     i = i + 1;
     X(i,:) = x;
-    [t,x] = modelo_st(t,x);
+    [t,x] = modelo_st(t , x );
     T(i)   = t;
 end
+
 clear i t x
 
 % Plot stochastic dynamics
@@ -37,4 +39,3 @@ xlabel("Tiempo")
 ylabel("Concentracion")
 xlim([100, 200])
 legend("FFCn")
-
