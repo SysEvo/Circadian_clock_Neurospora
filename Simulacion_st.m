@@ -8,20 +8,29 @@ y = parfeval(@Gillespie, 2, x, t, tMAX);
 [T,X] = fetchOutputs(y);
 % Plot stochastic dynamics
 
-ax1=nexttile;
-plot(ax1,T,X(:,8),'-','MarkerSize',3)
-title("LD 12:12")
-xlabel("Tiempo")
-ylabel("Concentracion")
-xlim([100, 200])
-legend("frq")
+% Plot stochastic dynamics
 
-ax2=nexttile;
-plot(ax2,T,X(:,12),'-','MarkerSize',3)
+plot(T,X(:,[8 12]),'-','MarkerSize',3)
 xlabel("Tiempo")
 ylabel("Concentracion")
+title("LD n=3")
 xlim([100, 200])
-legend("FFCn")
+legend(["frq","FFCn"])
+
+%ax1=nexttile;
+%plot(ax1,T,X(:,8),'-','MarkerSize',3)
+%title("LD 12:12")
+%xlabel("Tiempo")
+%ylabel("Concentracion")
+%xlim([100, 200])
+%legend("frq")
+
+%ax2=nexttile;
+%plot(ax2,T,X(:,12),'-','MarkerSize',3)
+%xlabel("Tiempo")
+%ylabel("Concentracion")
+%xlim([100, 200])
+%legend("FFCn")
 
 %Save
 save("Data_st.txt", "X", "T", "-ascii")
