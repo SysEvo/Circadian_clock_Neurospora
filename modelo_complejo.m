@@ -25,7 +25,7 @@ function y = modelo_complejo(tm,x)
     VVDn = x(15);
 %Tiempo y periodos LD
     m=mod(tm,24);
-    if m>=12
+    if m>=12 || t>228
         L = l(1);
     else
         L= l(2);
