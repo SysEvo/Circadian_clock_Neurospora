@@ -1,23 +1,17 @@
 clear; close all; clc;
 
 x0 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; 
-tM = 0:0.05:228;   
+tM = 0:0.05:480;   
 [t,x] = ode45(@modelo_complejo,tM,x0);
 
-x01 = x(end,:);
-tM1 = 228:0.05:480;
-[t1,x1] = ode45(@modelo_complejoDD,tM1,x01);
 
 % Plot ODE results
-X = [x; x1];
-y = [t; t1];
+%[pks1,locs1] = findpeaks(x(:,8));   %To localize the maximus points.
+%[pks2,locs2] = findpeaks(x(:,12));
 
-%[pks1,locs1] = findpeaks(X(:,8));   %To localize the maximus points.
-%[pks2,locs2] = findpeaks(X(:,12));
-
-plot(y,X(:,[8,12]),'-')
-%text(y(locs1)+.01,pks1,num2str(y(locs1)),"FontSize",6)
-%text(y(locs2)+.05,pks2,num2str(y(locs2)),"FontSize",5)
+plot(t,x(:,[8,12]),'-')
+%text(t(locs1)+.01,pks1,num2str(t(locs1)),"FontSize",6)
+%text(t(locs2)+.05,pks2,num2str(t(locs2)),"FontSize",5)
 title("LD DD 2.0")
 xlabel("Tiempo")
 ylabel("Concentracion")
