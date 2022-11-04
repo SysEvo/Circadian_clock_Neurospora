@@ -1,21 +1,21 @@
 % Simulate stochastic dynamics:
 t = 0;              % Current (initial) time point
-x = ones(1,15)*10;       % Current (initial) state (size # of species)
+x = [12000,1,19664,4,5,25,12,11,95,8,29,21,2030,3186,6648];       % Current (initial) state (size # of species)
 
-tMAX = 100;         % Maximum simulation time
+tMAX = 192;         % Maximum simulation time
 
-y = parfeval(@Gillespie, 2, x, t, tMAX);
-[T,X] = fetchOutputs(y);
+
+[T,X] = Gillespie(x,t,tMAX);
 % Plot stochastic dynamics
 
 % Plot stochastic dynamics
 
-plot(T,X(:,[8 12]),'-','MarkerSize',3)
-xlabel("Tiempo")
-ylabel("Concentracion")
-title("LD n=3")
-xlim([100, 200])
-legend(["frq","FFCn"])
+%plot(T,X(:,[8 12]),'-','MarkerSize',3)
+%xlabel("Tiempo")
+%ylabel("Concentracion")
+%title("LD n=3")
+%xlim([100, 200])
+%legend(["frq","FFCn"])
 
 %ax1=nexttile;
 %plot(ax1,T,X(:,8),'-','MarkerSize',3)
@@ -32,13 +32,10 @@ legend(["frq","FFCn"])
 %xlim([100, 200])
 %legend("FFCn")
 
-%Save
-save("Data_st.txt", "X", "T", "-ascii")
-
 %Function of the Gillespie algorithm.
 function [T,X] = Gillespie(x,t,tMAX )
-    T = zeros(1000,1);  % Simulated time points
-    X = zeros(1000,15);  % Simulated states (size # of species)
+    T = zeros(10^9,1);  % Simulated time points
+    X = zeros(10^9,15);  % Simulated states (size # of species)
     i = 0;
     while(t<tMAX)
         i = i + 1;
@@ -48,5 +45,10 @@ function [T,X] = Gillespie(x,t,tMAX )
         X(i,:) = x;
         [t,x] = modelo_st(t , x );
         T(i)   = t;
+        m=mod(t,12);
+        if m>11.999
+            %save the data
+            save("Data_st1.mat", "X", "T","-v7.3")
+        end
     end
 end

@@ -11,7 +11,7 @@ function [t,x] = modelo_st(t,x)
     
     %Periodos LD
     m=mod(t,24);
-    if m>=12
+    if m>=12 || t>96
         L = l(1);
     else
         L= l(2);
