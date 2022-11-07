@@ -34,8 +34,8 @@ tMAX = 192;         % Maximum simulation time
 
 %Function of the Gillespie algorithm.
 function [T,X] = Gillespie(x,t,tMAX )
-    T = zeros(10^9,1);  % Simulated time points
-    X = zeros(10^9,15);  % Simulated states (size # of species)
+    T = zeros(5*10^7,1);  % Simulated time points
+    X = zeros(5*10^7,15);  % Simulated states (size # of species)
     i = 0;
     while(t<tMAX)
         i = i + 1;
@@ -45,8 +45,8 @@ function [T,X] = Gillespie(x,t,tMAX )
         X(i,:) = x;
         [t,x] = modelo_st(t , x );
         T(i)   = t;
-        m=mod(t,12);
-        if m>11.999
+        m=mod(t,24);
+        if m>23.999
             %save the data
             save("Data_st1.mat", "X", "T","-v7.3")
         end
