@@ -1,4 +1,5 @@
-function [t,x] = modelo_st(t,x)
+function [t,x] = modelo_st(t,x,tDD,rnum1,rnum2)
+
 
     %Parametros
     k = [27674, 1.2, 90, 37209, 0.03, 0.226, 2.4, 2, 2.0296e-05, 0.3, 0.001, 0.6, 0.001, 5, 23256, 1.3953e+05, 5.4, 0.15, 2, 0.05, 1.8605e+07, 0.68, 0.3];
@@ -105,10 +106,10 @@ function [t,x] = modelo_st(t,x)
          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1]];
 
     %Tiempo
-    tR = -log(1-rand())/sum(lambda);
+    tR = -log(1-rnum1)/sum(lambda);
     t = t + tR;
 
     %ReacciÃ³n a ocurrir.
-    rR = sum(rand()>(cumsum(lambda)/sum(lambda)))+1;
+    rR = sum(rnum2>(cumsum(lambda)/sum(lambda)))+1;
     x = x + V(rR,:);
 end

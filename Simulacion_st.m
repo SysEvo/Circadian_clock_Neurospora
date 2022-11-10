@@ -1,11 +1,14 @@
 % Simulate stochastic dynamics:
 t = 0;              % Current (initial) time point
-x = [12000,1,19664,4,5,25,12,11,95,8,29,21,2030,3186,6648];       % Current (initial) state (size # of species)
 
-tMAX = 192;         % Maximum simulation time
+x = [1200,2,1966,8,10,50,24,22,95,32,29,42,2030,3186,6648];       % Current (initial) state (size # of species)
+%x=ones(1,15);
+tMAX = 320;         % Maximum simulation time
+prompt="Name file of save:";
+file=input(prompt, 's');
 
 
-[T,X] = Gillespie(x,t,tMAX);
+[T,X] = Gillespie(x,t,tMAX,file);
 % Plot stochastic dynamics
 
 % Plot stochastic dynamics
@@ -33,17 +36,19 @@ tMAX = 192;         % Maximum simulation time
 %legend("FFCn")
 
 %Function of the Gillespie algorithm.
-function [T,X] = Gillespie(x,t,tMAX )
-    T = zeros(10^9,1);  % Simulated time points
-    X = zeros(10^9,15);  % Simulated states (size # of species)
+function [T,X] = Gillespie(x,t,tMAX ,file)
+    T = zeros(6*10^7,1);  % Simulated time points
+    X = zeros(6*10^7,15);  % Simulated states (size # of species)
     i = 0;
+    ranum1=rand(5*10^7,1);
+    ranum2=rand(5*10^7,1);    
     while(t<tMAX)
         i = i + 1;
         X(i,:) = x;
         T(i)   = t;
         i = i + 1;
         X(i,:) = x;
-        [t,x] = modelo_st(t , x );
+	[t,x] = modelo_st(t , x , 144,ranum1(i/2),ranum2(i/2))
         T(i)   = t;
         m=mod(t,12);
         if m>11.999
