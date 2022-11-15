@@ -3,7 +3,7 @@ t = 0;              % Current (initial) time point
 x = [12700,15819,496,332515,8851,1338,1,99,491,25,103,248,0,12,1607];       % Current (initial) state (size # of species)
 %x=ones(1,15);
 tMAX = 264;         % Maximum simulation time
-prompt="Name file of save:";
+prompt="Name file to save:";
 file=input(prompt, 's');
 
 
