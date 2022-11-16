@@ -24,8 +24,8 @@ function [T,X] = Gillespie(x,t,tMAX ,file)
         X(i,:) = x;
 	[t,x] = modelo_st(t , x , 120,ranum1(i/2),ranum2(i/2));
         T(i)   = t;
-        m=mod(t,12);
-        if m>11.999
+        m=mod(t,24);
+        if m>23.999
             %save the data
             save("Data_st1.mat", "X", "T","-v7.3")
         end
