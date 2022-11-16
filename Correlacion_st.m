@@ -4,10 +4,11 @@ file=input(prompt, 's');
 load(file)
 
 y = find(T>120,1);
+z=find(T>150,1);
 period1 = 24;
 x = zeros(length(T),15);
 for i = 1:15
-    x(:,i)=smooth(X(:,i));
+    x(:,i)=smooth(X(:,i),0.1);
 end
 
 [pks1,locs1] = findpeaks(x(y:end,8),"MinPeakDistance",y/6,"MinPeakHeight",220);
@@ -44,12 +45,12 @@ t_cal=T(1:d_ind);
 %end
 
 %DD period2
-d_ind=find(T(y:end)>period2,1);
+d_ind=find(T(z:end)>T(z)+period2,1);
 for indd=1:15
-     me=mean(x(y:end,indd));
-     acf=mean((x(y:(end-d_ind),indd)-me).*(x((y+d_ind):end,indd)-me));
-     s=mean((x(y:end,indd)-me).*(x(y:end,indd)-me));
-     if ~isempty(find(autocorr(x(y:end,indd),'NumLags',d_ind-1)<0, 1))
+     me=mean(x(z:end,indd));
+     acf=mean((x(z:(end-d_ind),indd)-me).*(x((z+d_ind):end,indd)-me));
+     s=mean((x(z:end,indd)-me).*(x(z:end,indd)-me));
+     if ~isempty(find(autocorr(x(z:end,indd),'NumLags',d_ind-1)<0, 1))
          if acf>0
              tau=-1/log((acf/s));
          else
@@ -59,13 +60,12 @@ for indd=1:15
          tau=0;
      end
      
-     
     eval(['tau_',num2str(indd),'=tau;']);
     eval(['acf_',num2str(indd),'=acf;']);
 end
 
-d_ind=find(T(y:end)>3*period2,1);
-t_cal1=T(y:y+d_ind-1);
+d_ind=find(T(z:end)>T(z)+3*period2,1);
+t_cal1=T(z:z+d_ind-1);
 %for indd=1:15
 %    acf=autocorr(x(l:end,indd),'NumLags',d_ind-1);
 %    acf=acf.*length(x(l:end,:))./(length(x(l:end,:))-(0:(d_ind-1)))';
@@ -93,7 +93,7 @@ title("Correlation")
 legend('frq','FFCn');
 
 
-subplot(2,2,4);plot(T(y:end),X(y:end,[8,12]));
+subplot(2,2,4);plot(T(z:end),X(z:end,[8,12]));
 title('Deterministic model DD');xlim([120,264]);
 
 
