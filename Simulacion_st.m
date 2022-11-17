@@ -27,11 +27,11 @@ function [T,X] = Gillespie(x,t,tMAX ,file)
         m=mod(t,24);
         if m>23.999
             %save the data
-            save("Data_st1.mat", "X", "T","-v7.3")
+            save("Data_st1.mat", "X", "T","-v7.3");
         end
     end
     z=find(T,1,"last");
     T=T(1:z);
     X=X(1:z,:);
-    save(file, "X", "T","-v7.3")
+    save(file, "X", "T","-v7.3");
 end
