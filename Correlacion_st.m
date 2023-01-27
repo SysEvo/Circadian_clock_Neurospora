@@ -8,7 +8,7 @@ z=find(T>150,1);
 period1 = 24;
 x = zeros(length(T),15);
 for i = 1:15
-    x(:,i)=smooth(X(:,i),0.1);
+    x(:,i)=smooth(X(:,i),10001);
 end
 
 [pks1,locs1] = findpeaks(x(y:end,8),"MinPeakDistance",y/6,"MinPeakHeight",220);
@@ -78,23 +78,23 @@ figure;
 subplot(2,2,1);  % autocorrelation function
 plot(t_cal,[c_t(period1,tau8,t_cal), c_t(period1, tau12, t_cal), ...
     exp(-t_cal./(tau8*period1)), exp(-t_cal./(tau12*period1))],'-','linewidth',0.5);
-title("Correlation")
+title("Correlation");
 legend('frq','FFCn');
 
 
 subplot(2,2,2);plot(T(1:y),X(1:y,[8,12]));
-title('Deterministic model LD');legend(["frq","FFCn"]);xlim([0, 120])
+title('Deterministic model LD');legend(["frq","FFCn"]);xlim([0, 120]);
 
 
 subplot(2,2,3);  % autocorrelation function
 plot(t_cal1,[c_t(period2,tau_8,t_cal1), c_t(period2, tau_12, t_cal1), ...
     exp(-t_cal1./(tau_8*period2)), exp(-t_cal1./(tau_12*period2))],'-','linewidth',0.5);
-title("Correlation")
+title("Correlation");
 legend('frq','FFCn');
 
 
 subplot(2,2,4);plot(T(z:end),X(z:end,[8,12]));
-title('Deterministic model DD');xlim([120,264]);
+title('Deterministic model DD');
 
 
 function eccor = c_t(period,tau,tcal)
