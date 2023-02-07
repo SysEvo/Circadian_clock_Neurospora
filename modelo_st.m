@@ -1,6 +1,7 @@
+%Function that contains the propensities to stochastic simulations of the circadian clock of N. crassa.
 function [t,x] = modelo_st(t,x,tDD,rnum1,rnum2)
 
-    %Parametros
+    %Parameters
     k = [29750, 1.2, 90, 40000, 0.03, 0.226, 2.4, 2, 1.888e-05, 0.3, 0.001, 50, 0.001, 20, 182500, 8000000, 5.4, 0.15, 2, 0.05, 20000000, 0.68, 0.3];
     n1 = 2;
     n2 = 3;
@@ -8,7 +9,7 @@ function [t,x] = modelo_st(t,x,tDD,rnum1,rnum2)
     kd = [2.4, 2.5, 0.135, 0.085, 0.05, 0.05, 6, 1, 0.69, 0.34, 0.34, 0.1, 6.2, 0.24, 0.24];
     
     l = [0, 0.2];
-    %Periodos LD y DD
+    %Periods of LD cycles at 12:12, and after tDD it changes to DD cycles.
     m=mod(t,24);
     if m>=12 || t>tDD
         L = l(1);
@@ -16,7 +17,7 @@ function [t,x] = modelo_st(t,x,tDD,rnum1,rnum2)
         L= l(2);
     end
 
-    %Reacciones
+    %Reactions
     function f = f_M(P_2,P_1,K_m)
         f = (P_1 + P_2 + K_m -  sqrt((P_1 + P_2 + K_m)^2 - 4*P_1*P_2))/2;
     end
@@ -62,7 +63,7 @@ function [t,x] = modelo_st(t,x,tDD,rnum1,rnum2)
     lambda(38) = kd(14)*x(14); 
     lambda(39) = kd(15)*x(15);
 
-    %Matriz estequiomÃ©trica
+    %Stequiometric matrix
     V = [[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
@@ -103,11 +104,11 @@ function [t,x] = modelo_st(t,x,tDD,rnum1,rnum2)
          [0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0];
          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1]];
 
-    %Tiempo
+    %Aleatory time.
     tR = -log(1-rnum1)/sum(lambda);
     t = t + tR;
 
-    %ReacciÃ³n a ocurrir.
+    %Reaction that occur at the aleatory event.
     rR = sum(rnum2>(cumsum(lambda)/sum(lambda)))+1;
     x = x + V(rR,:);
 end
