@@ -1,4 +1,6 @@
 %Function that contains the propensities to stochastic simulations of the circadian clock of N. crassa.
+%t variable input is the actual time of the simulation, x is a vector with the concentration of the molecules at time t,
+%tDD is the time that you want to simulate at LD cycles, rnum1 and rnum2 are the random numbers to the next time and reaction event.
 function [t,x] = modelo_st(t,x,tDD,rnum1,rnum2)
 
     %Parameters
