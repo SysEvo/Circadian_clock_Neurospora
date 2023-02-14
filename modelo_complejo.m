@@ -1,5 +1,6 @@
+%Function of the ODE system of the circadian clock of Neurospora crassa and its parameters.
 function y = modelo_complejo(tm,x)
-%Parametros    
+%Parameters    
     k = [1.19, 1.2, 90, 1.6, 0.03, 0.226, 2.4, 2, 0.472, 0.3, 0.001, 50, 0.001, 20, 7.3, 320, 5.4, 0.15, 2, 0.05, 800, 0.68, 0.3];
     n1 = 2;
     n2 = 3;
@@ -7,7 +8,7 @@ function y = modelo_complejo(tm,x)
     kd = [2.4, 2.5, 0.135, 0.085, 0.05, 0.05, 6, 1, 0.69, 0.34, 0.34, 0.1, 6.2, 0.24, 0.24];
     
     l = [0, 0.3];
-%mRNAs y Proteinas
+%mRNAs and Protein
     wc1 = x(1);
     wc2 = x(2);
     WC1 = x(3);
@@ -23,7 +24,7 @@ function y = modelo_complejo(tm,x)
     vvd = x(13);
     VVDc = x(14);
     VVDn = x(15);
-%Tiempo y periodos LD
+%Time and Period duration of the LD cycles at 12:12 circadian time, after 228 hrs it changes to DD cycles.
     m=mod(tm,24);
     if m>=12 || tm>228
         L = l(1);
@@ -31,7 +32,7 @@ function y = modelo_complejo(tm,x)
         L= l(2);
     end
     
-%Ecuaciones
+%ODE system
     function f = f_M(P_2,P_1,K_m)
         f = (P_1 + P_2 + K_m -  sqrt((P_1 + P_2 + K_m)^2 - 4*P_1*P_2))/2;
         %f = P_1*((P_2^n)/(P_2^n + K_m^n));

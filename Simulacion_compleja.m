@@ -1,8 +1,8 @@
 clear; close all; clc;
 
-x0 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; 
-tM = 0:0.05:450;   
-[t,x] = ode45(@modelo_complejo,tM,x0);
+x0 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];   %initial values of concentration of the molecules.
+tM = 0:0.05:450;                                      %time to the simulation
+[t,x] = ode45(@modelo_complejo,tM,x0);        %Solve the ODE system, x contains the concentration of the molecules at t time.
 
 
 % Plot ODE results
