@@ -1,9 +1,10 @@
 x0 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; 
-tM = 0:0.05:450;   
+tM = 0:0.05:600;   
 [t,x] = ode45(@modelo_complejo,tM,x0);
-t = t(1001:end);
-x = x(1001:end,:);
-l = 3560;
+
+l = find(t==260,1);
+y= find(t==100,1);
+z= find(t==350,1);
 period1 = 24;
 
 [pks1,locs1] = findpeaks(x(:,8),"MinPeakDistance",20);
@@ -11,11 +12,11 @@ period2 = diff(t(locs1([end-1, end])));
 %LD period1
 d_ind=ceil(period1/(t(2)-t(1)));
 for indd=1:15
-     me=mean(x(1:l,indd));
-     acf=mean((x(1:(l-d_ind),indd)-me).*(x((1+d_ind):l,indd)-me));
-     s=mean((x(1:l,indd)-me).*(x(1:l,indd)-me));
+     me=mean(x(y:l,indd));
+     acf=mean((x(y:(l-d_ind),indd)-me).*(x((y+d_ind):l,indd)-me));
+     s=mean((x(y:l,indd)-me).*(x(y:l,indd)-me));
      
-     if ~isempty(find(autocorr(x(1:l,indd),'NumLags',d_ind-1)<0, 1))
+     if ~isempty(find(autocorr(x(y:l,indd),'NumLags',d_ind-1)<0, 1))
          if acf>0
              tau=-1/log((acf/s));
          else
@@ -31,7 +32,7 @@ for indd=1:15
 end
 
 d_ind=ceil(3*period1/(t(2)-t(1)));
-t_cal=t(1:d_ind);
+t_cal=t(y:d_ind);
 %for indd=1:15
 %    acf=autocorr(x(1:l,indd),'NumLags',d_ind-1);
 %    acf=acf.*length(x(1:l,:))./(length(x(1:l,:))-(0:(d_ind-1)))';
@@ -42,10 +43,10 @@ t_cal=t(1:d_ind);
 %DD period2
 d_ind=ceil(period2/(t(end)-t(end-1)));
 for indd=1:15
-     me=mean(x(l:end,indd));
-     acf=mean((x(l:(end-d_ind),indd)-me).*(x((l+d_ind):end,indd)-me));
-     s=mean((x(l:end,indd)-me).*(x(l:end,indd)-me));
-     if ~isempty(find(autocorr(x(l:end,indd),'NumLags',d_ind-1)<0, 1))
+     me=mean(x(z:end,indd));
+     acf=mean((x(z:(end-d_ind),indd)-me).*(x((z+d_ind):end,indd)-me));
+     s=mean((x(z:end,indd)-me).*(x(z:end,indd)-me));
+     if ~isempty(find(autocorr(x(z:end,indd),'NumLags',d_ind-1)<0, 1))
          if acf>0
              tau=-1/log((acf/s));
          else
@@ -61,7 +62,7 @@ for indd=1:15
 end
 
 d_ind=ceil(3*period2/(t(end)-t(end-1)));
-t_cal1=t(l:l+d_ind-1);
+t_cal1=t(z:z+d_ind-1);
 %for indd=1:15
 %    acf=autocorr(x(l:end,indd),'NumLags',d_ind-1);
 %    acf=acf.*length(x(l:end,:))./(length(x(l:end,:))-(0:(d_ind-1)))';
@@ -74,23 +75,22 @@ figure;
 subplot(2,2,1);  % autocorrelation function
 plot(t_cal,[c_t(period1,tau8,t_cal), c_t(period1, tau12, t_cal), ...
     exp(-t_cal./(tau8*period1)), exp(-t_cal./(tau12*period1))],'-','linewidth',0.5);
-title("Correlation")
+title("Correlation");
 legend('frq','FFCn');
 
 
-subplot(2,2,2);plot(t(1:l),x(1:l,[8,12]));
-title('Deterministic model LD');legend(["frq","FFCn"]);xlim([50, 228])
-
+subplot(2,2,2);plot(t(y:l),x(y:l,[8,12]));
+title('Deterministic model LD');legend(["frq","FFCn"]);
 
 subplot(2,2,3);  % autocorrelation function
 plot(t_cal1,[c_t(period2,tau_8,t_cal1), c_t(period2, tau_12, t_cal1), ...
     exp(-t_cal1./(tau_8*period2)), exp(-t_cal1./(tau_12*period2))],'-','linewidth',0.5);
-title("Correlation")
+title("Correlation");
 legend('frq','FFCn');
 
 
-subplot(2,2,4);plot(t(l:end),x(l:end,[8,12]));
-title('Deterministic model DD');xlim([228,450]);
+subplot(2,2,4);plot(t(z:end),x(z:end,[8,12]));
+title('Deterministic model DD');
 
 
 function eccor = c_t(period,tau,tcal)
