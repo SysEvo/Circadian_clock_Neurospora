@@ -4,10 +4,10 @@
 function [t,x] = modelo_st(t,x,tDD,rnum1,rnum2)
 
     %Parameters
-    k = [29750, 1.2, 90, 40000, 0.03, 0.226, 2.4, 2, 1.888e-05, 0.3, 0.001, 50, 0.001, 20, 182500, 8000000, 5.4, 0.15, 2, 0.05, 20000000, 0.68, 0.3];
+    k = [117801, 1.2, 90, 158389, 0.03, 0.226, 2.4, 2, 4.768e-6, 0.3, 0.001, 50, 0.001, 20, 722650, 31677848, 5.4, 0.15, 2, 0.05, 79194621, 0.68, 0.3];
     n1 = 2;
     n2 = 3;
-    K = [1.2e-6, 7500, 1250, 125000, 50000, 4500, 500];
+    K = [3.0305e-7, 29697, 4949, 494966, 197986, 17818, 1980];
     kd = [2.4, 2.5, 0.135, 0.085, 0.05, 0.05, 6, 1, 0.69, 0.34, 0.34, 0.1, 6.2, 0.24, 0.24];
     
     l = [0, 0.2];
@@ -24,7 +24,7 @@ function [t,x] = modelo_st(t,x,tDD,rnum1,rnum2)
         f = (P_1 + P_2 + K_m -  sqrt((P_1 + P_2 + K_m)^2 - 4*P_1*P_2))/2;
     end
 
-    lambda = zeros(39,1);
+    lambda = zeros(1,39);
     lambda(1) = k(1); 
     lambda(2) = k(2)*x(6); 
     lambda(3) = k(3)*x(7); 
@@ -107,10 +107,15 @@ function [t,x] = modelo_st(t,x,tDD,rnum1,rnum2)
          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1]];
 
     %Aleatory time.
-    tR = -log(1-rnum1)/sum(lambda);
+    %tR = -log(1-rnum1)/sum(lambda);
+    tR = 1e-5;
     t = t + tR;
 
     %Reaction that occur at the aleatory event.
-    rR = sum(rnum2>(cumsum(lambda)/sum(lambda)))+1;
-    x = x + V(rR,:);
+    %rR = sum(rnum2>(cumsum(lambda)/sum(lambda)))+1;
+    %x = x + V(rR,:);
+    Npoisson = icdf("Poisson",rnum2,lambda);
+    x = x + Npoisson*V;
+    x(x<0) = 0;
+
 end

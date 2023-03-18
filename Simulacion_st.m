@@ -11,20 +11,17 @@ file=input(prompt, 's');
 
 %Function of the Gillespie algorithm.
 function [T,X] = Gillespie(x,t,tMAX ,file)
-    T = zeros(3*10^8,1);  % Simulated time points
-    X = zeros(3*10^8,15);  % Simulated states (size # of species)
+    T = zeros(3*10^6,1);  % Simulated time points
+    X = zeros(3*10^6,15);  % Simulated states (size # of species)
     i = 0;
-    ranum1=rand(2*10^8,1);	%Random numbers to the aleatory time.
-    ranum2=rand(2*10^8,1);    %Random numbers to choose wich reaction occur at an event.
+    ranum1=rand(2*10^6,1);	%Random numbers to the aleatory time.
+    ranum2=rand(2*10^6,39);    %Random numbers to choose wich reaction occur at an event.
     %Random walk
     while(t<tMAX)
         i = i + 1;
         X(i,:) = x;
         T(i)   = t;
-        i = i + 1;
-        X(i,:) = x;
-	[t,x] = modelo_st(t , x , 120,ranum1(i/2),ranum2(i/2));
-        T(i)   = t;
+	[t,x] = modelo_st(t , x , 120,ranum1(i),ranum2(i,:));
         m=mod(t,24);
         if m>23.999
             %save backups each ~24 hrs.
