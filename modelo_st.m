@@ -108,7 +108,7 @@ function [t,x] = modelo_st(t,x,tDD,rnum1,rnum2)
 
     %Aleatory time.
     %tR = -log(1-rnum1)/sum(lambda);
-    tR = 1e-5;
+    tR = 1e-4;
     t = t + tR;
 
     %Reaction that occur at the aleatory event.
