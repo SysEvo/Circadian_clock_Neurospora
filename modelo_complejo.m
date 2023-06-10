@@ -2,10 +2,10 @@
 function y = modelo_complejo(tm,x)
 %Parameters    
     k = [1.19, 1.2, 90, 1.6, 0.03, 0.226, 2.4, 2, 0.472, 0.3, 0.001, 10, 0.001, 1, 7.3, 320, 5.4, 0.15, 2, 0.05, 800, 0.68, 0.3];
-    n1 = 1;
-    n2 = 1;
+    n1 = 2;
+    n2 = 2;
     n3 = 3;
-    n4 = 1;
+    n4 = 2;
     K = [0.03, 0.3, .05, 5, 2, 0.18, 0.02];
     kd = [2.4, 2.5, 0.135, 0.085, 0.005, 0.005, 6, 1, 0.69, 0.34, 0.34, 0.1, 6.2, 0.24, 0.24];
     
@@ -28,7 +28,7 @@ function y = modelo_complejo(tm,x)
     VVDn = x(15);
 %Time and Period duration of the LD cycles at 12:12 circadian time, after 228 hrs it changes to DD cycles.
     m=mod(tm,24);
-    if m>=12 %|| tm>400
+    if m>=12 || tm>260
         L = l(1);
     else
         L= l(2);
