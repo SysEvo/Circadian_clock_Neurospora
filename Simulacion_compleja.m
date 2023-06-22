@@ -15,7 +15,7 @@ plot(t,x(:,6),'-')
 title("LD DD 3.0")
 xlabel("Tiempo")
 ylabel("Concentracion")
-xlim([96,800])
+xlim([0,800])
 %ylim([2.2,2.4])
 %legend(["laWCC","frq","FRQn"])
 
