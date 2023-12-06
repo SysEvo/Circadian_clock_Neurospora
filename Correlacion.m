@@ -76,7 +76,7 @@ subplot(2,2,1);  % autocorrelation function
 plot(t_cal,[c_t(period1,tau8,t_cal), c_t(period1, tau12, t_cal), ...
     exp(-t_cal./(tau8*period1)), exp(-t_cal./(tau12*period1))],'-','linewidth',0.5);
 title("Correlation");
-legend('frq','FFCn');
+legend('frq','FFCn','decay frq','decay FFCn');
 
 
 subplot(2,2,2);plot(t(y:l),x(y:l,[8,12]));
@@ -86,7 +86,7 @@ subplot(2,2,3);  % autocorrelation function
 plot(t_cal1,[c_t(period2,tau_8,t_cal1), c_t(period2, tau_12, t_cal1), ...
     exp(-t_cal1./(tau_8*period2)), exp(-t_cal1./(tau_12*period2))],'-','linewidth',0.5);
 title("Correlation");
-legend('frq','FFCn');
+legend('frq','FFCn','decay frq','decay FFCn');
 
 
 subplot(2,2,4);plot(t(z:end),x(z:end,[8,12]));

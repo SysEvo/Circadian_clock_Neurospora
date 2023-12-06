@@ -1,6 +1,5 @@
 
-prompt="Name file of stochastic data:";
-file=input(prompt, 's');
+file="Data_st5.mat";
 load(file)
 
 y = find(T>120,1);
@@ -78,24 +77,26 @@ figure;
 subplot(2,2,1);  % autocorrelation function
 plot(t_cal,[c_t(period1,tau8,t_cal), c_t(period1, tau12, t_cal), ...
     exp(-t_cal./(tau8*period1)), exp(-t_cal./(tau12*period1))],'-','linewidth',0.5);
-title("Correlation");
-legend('frq','FFCn');
+title("Correlation");xlim([t_cal(1), t_cal(end)]);
+legend('frq','FFCn','decay frq','decay FFCn','Location','southoutside','Orientation','horizontal');
 
 
 subplot(2,2,2);plot(T(1:y),X(1:y,[8,12]));
-title('Deterministic model LD');legend(["frq","FFCn"]);xlim([0, 120]);
+title('Stochastic model LD');legend(["frq","FFCn"]);xlim([0, 120]);
 
 
 subplot(2,2,3);  % autocorrelation function
 plot(t_cal1,[c_t(period2,tau_8,t_cal1), c_t(period2, tau_12, t_cal1), ...
     exp(-t_cal1./(tau_8*period2)), exp(-t_cal1./(tau_12*period2))],'-','linewidth',0.5);
-title("Correlation");
-legend('frq','FFCn');
+title("Correlation");xlim([t_cal1(1), t_cal1(end)]);
+legend('frq','FFCn','decay frq','decay FFCn','Location','southoutside','Orientation','horizontal');
 
 
 subplot(2,2,4);plot(T(z:end),X(z:end,[8,12]));
-title('Deterministic model DD');
+title('Stochastic model DD');legend(["frq","FFCn"]);xlim([150, 260]);
 
+f = gcf;
+exportgraphics(f,'Correlacion_st.png','Resolution',300)
 
 function eccor = c_t(period,tau,tcal)
     eccor = exp(-tcal./(tau*period)).*cos(2*pi*tcal/period);
