@@ -1,5 +1,5 @@
 # Circadian_clock_Neurospora
-Modeling the circadian clock of the fungi Neurospora crassa.
+Evolutionary dynamic of a model of the *Neurospora crassa* circadian clock
 
 The codes in matlab language for the comparison of the deterministic and stochastic simulations in the two environments (Light:Dark and Dark:Dark) and with the same parameters are divided in three files groups:
 The files containning the models to the deterministic and stochastic simulations are named as:
